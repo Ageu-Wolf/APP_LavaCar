@@ -43,9 +43,9 @@
                             <td>{{ agendamento.funcionario }}</td>
                             <td>
                                 {% for servico in agendamento.servicos %}
-                                    {{ servico }} - R$ {{ servico.preco }} ({{servico.get_situacao_display }}) <br>
+                                    {{ servico }} - R$ {{ servico.preco }} ({{ servico.get_situacao_display }}) <br>
                                 {% endfor %}
-                                <strong>Valor total: {{ agendamento.valor }}</strong>
+                                <strong> Valor total: {{ agendamento.valor }}</strong>
                             </td>
                             <td style="text-align: center">
                                 {% if agendamento.status == 'A' %}
@@ -77,12 +77,14 @@
                                         <i class="far fa-trash-alt"></i>
                                     </span>
                                 {% endif %}
+                                {% if perms.agendamentos.fechar_agendamento %}
                                 <a href="{% url 'agendamento_exibir' agendamento.pk %}">
                                     <span class="icon">
                                         <i class="fas fa-check-circle">
                                         </i>
                                     </span>
                                 </a>
+                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}

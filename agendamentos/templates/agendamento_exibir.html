@@ -7,8 +7,7 @@
             <h3 class="text-center">Dados do Atendimento</h3>
             <p class="p-2 mt-2"><strong>Horário: </strong>{{ agendamento.horario }}</p>
             <p class="p-2 mt-2"><strong>Cliente: </strong>{{ agendamento.cliente }}</p>
-            <p class="p-2 mt-2"><strong>Funcionário pessoalmente pelo atendimento: </strong>{{ agendamento.funcionario
-                }}</p>
+            <p class="p-2 mt-2"><strong>Funcionário pessoalmente pelo atendimento: </strong>{{ agendamento.funcionario }}</p>
 
             <h4> Serviços realizados </h4>
 
@@ -22,10 +21,11 @@
 
             <p class="p-2 ml-4"><strong>Valor total: </strong>{{ agendamento.valor }}</p>
             <div class="text-end">
-                <a href="#" class="btn btn-primary text-white" type="button">
+                <a href="{% url 'agendamentos' %}" class="btn btn-primary text-white" type="button">
                     <span class="text">Voltar</span>
                 </a>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
