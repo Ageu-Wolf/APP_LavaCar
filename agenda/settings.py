@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+import cloudinary
+import dj_database_url
+from decouple import config
 from django.conf.global_settings import LOGIN_REDIRECT_URL
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ix_1u@l(30(z$%)oltj-sl%3(7s_ze-nlpn#0xm0z_jv31#@58'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
 
 
 # Application definition
@@ -41,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-INSTALLED_APPS += ['django_bootstrap5', 'stdimage']
+INSTALLED_APPS += ['django_bootstrap5', 'stdimage', 'cloudinary']
 
 INSTALLED_APPS += ['home', 'fornecedores', 'clientes', 'produtos', 'funcionarios','servicos', 'agendamentos',]
 
@@ -79,10 +82,8 @@ WSGI_APPLICATION = 'agenda.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.parse(config("DATABASE_URL")),
+
 }
 
 
@@ -121,6 +122,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+cloudinary.config(
+    cloud_name = config(
+        'CLOUD_NAME',) ,
+    api_key = config('API_KEY'),
+    api_secret = config('API_SECRET'),
+    secure = True
+)
 MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
@@ -133,12 +141,12 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'ageuesilva.rieger@gmail.com>'
-EMAIL_HOST_PASSWORD = 'ewxoxzafjjongpei'
+EMAIL_BACKEND = "EMAIL_BACKEND",
+EMAIL_HOST = "EMAIL_HOST",
+EMAIL_PORT = "EMAIL_PORT",
+EMAIL_USE_TLS = "EMAIL_USE_TLS",
+EMAIL_HOST_USER = "EMAIL_HOST_USER",
+EMAIL_HOST_PASSWORD = "EMAIL_HOST_PASSWORD",
 DEFAULT_FROM_EMAIL = 'lavacar'
 
 LOGIN_REDIRECT_URL = 'index'
